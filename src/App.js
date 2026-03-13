@@ -167,6 +167,22 @@ export default function App() {
     setTimeout(() => {
       setAnswers((prev) => ({ ...prev, [current]: value }));
       if (current + 1 >= questions.length) {
+        const finalAnswers = { ...answers, [current]: value };
+        const finalScore = Object.values(finalAnswers).reduce((a, b) => a + b, 0);
+        const finalPct = Math.round((finalScore / 40) * 100);
+        const finalResult = getResult(finalScore);
+        fetch("https://script.google.com/macros/s/AKfycbxMLWKEDgG6tO-OPivgkwRAVKkRj-Y2RCLYrB1pAJ_UB-BJrnfrq-6C4_tn57ydHF6sRg/exec", {
+          method: "POST",
+          mode: "no-cors",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            companyName,
+            score: finalScore,
+            pct: finalPct,
+            level: finalResult.level,
+            plan: finalResult.plan,
+          }),
+        }).catch(() => {});
         setStep("result");
       } else {
         setCurrent((c) => c + 1);
@@ -557,7 +573,9 @@ export default function App() {
             {/* CTA */}
             <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
               <a
-                href="mailto:info@example.com?subject=AI顧問サービスのご相談"
+                href="https://timerex.net/s/suzuki.r_d038/c84ec339"
+                target="_blank"
+                rel="noopener noreferrer"
                 style={{
                   display: "block",
                   background: "linear-gradient(135deg, #4D9EFF, #3B7FE0)",
