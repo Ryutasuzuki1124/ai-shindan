@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 const questions = [
   {
@@ -155,7 +155,6 @@ export default function App() {
   const [selectedIndex, setSelectedIndex] = useState(null);
   const [animating, setAnimating] = useState(false);
   const [companyName, setCompanyName] = useState("");
-  const [score, setScore] = useState(0);
 
   const handleSelect = (index) => {
     setSelectedIndex(index);
@@ -168,7 +167,6 @@ export default function App() {
     setTimeout(() => {
       setAnswers((prev) => ({ ...prev, [current]: value }));
       if (current + 1 >= questions.length) {
-        setScore(Object.values({ ...answers, [current]: value }).reduce((a, b) => a + b, 0));
         setStep("result");
       } else {
         setCurrent((c) => c + 1);
